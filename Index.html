@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced IP Tracker</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:#1e293b;
+padding:30px;
+border-radius:15px;
+max-width:700px;
+margin:auto;
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+h1{
+margin-bottom:30px;
+}
+
+.info{
+text-align:left;
+margin-top:20px;
+}
+
+.info p{
+padding:8px;
+border-bottom:1px solid #334155;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:20px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+iframe{
+margin-top:20px;
+border-radius:10px;
+border:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Advanced IP Tracker</h1>
+
+<button onclick="getIP()">Track My IP</button>
+
+<div class="info" id="result"></div>
+
+<div id="map"></div>
+
+</div>
+
+<script>
+
+async function getIP(){
+
+const res = await fetch("https://ipapi.co/json/");
+const data = await res.json();
+
+document.getElementById("result").innerHTML = `
+<p><b>IP Address:</b> ${data.ip}</p>
+<p><b>City:</b> ${data.city}</p>
+<p><b>Region:</b> ${data.region}</p>
+<p><b>Country:</b> ${data.country_name}</p>
+<p><b>Postal:</b> ${data.postal}</p>
+<p><b>ISP:</b> ${data.org}</p>
+<p><b>Latitude:</b> ${data.latitude}</p>
+<p><b>Longitude:</b> ${data.longitude}</p>
+<p><b>Timezone:</b> ${data.timezone}</p>
+<p><b>Browser:</b> ${navigator.userAgent}</p>
+`;
+
+document.getElementById("map").innerHTML = `
+<iframe
+width="100%"
+height="300"
+src="https://maps.google.com/maps?q=${data.latitude},${data.longitude}&z=12&output=embed">
+</iframe>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
